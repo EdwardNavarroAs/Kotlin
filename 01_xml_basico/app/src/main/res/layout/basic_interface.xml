@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 ────────────────────────────────────────────────────────────
-🧠 CAPÍTULO 1: Fundamentos de Interfaces en XML - Android
+CAPÍTULO 1: Fundamentos de Interfaces en XML - Android
 ────────────────────────────────────────────────────────────
 
 Este archivo muestra los elementos fundamentales para crear interfaces en Android usando XML.
 
-📌 CONCEPTOS CLAVE
+CONCEPTOS CLAVE
 
 1. LinearLayout:
    - Es un contenedor que organiza los elementos (hijos) en una sola dirección: vertical u horizontal.
@@ -40,7 +40,6 @@ Este archivo muestra los elementos fundamentales para crear interfaces en Androi
    - La etiqueta <View> sin contenido puede usarse como separador visual, caja de color, espaciador, etc.
 
 ────────────────────────────────────────────────────────────
-👉 A continuación, se presentan ejemplos prácticos con estos conceptos.
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

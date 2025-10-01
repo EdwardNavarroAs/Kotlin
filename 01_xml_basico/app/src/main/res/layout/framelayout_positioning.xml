@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+────────────────────────────────────────────────────────────
+CAPÍTULO 3: Superposición y Posicionamiento – FrameLayout
+────────────────────────────────────────────────────────────
+
+¿Qué es FrameLayout?
+
+FrameLayout es un tipo de layout que permite colocar múltiples vistas
+superpuestas unas sobre otras. Es útil para:
+
+- Mostrar contenido sobre una imagen (ej. botones, texto).
+- Crear diseños con fondo fijo y elementos flotantes.
+- Posicionar vistas en esquinas o centros de pantalla.
+
+Comportamiento clave:
+- Solo se muestra la vista que esté más arriba (última en el XML), si no hay transparencia.
+- Las vistas se colocan por defecto en la **esquina superior izquierda**.
+- Se usa `layout_gravity` para mover vistas dentro del FrameLayout.
+- Se puede usar `gravity` en el FrameLayout para alinear todas las vistas hijas por defecto.
+
+Componentes nuevos en este capítulo:
+- `ImageView`: muestra una imagen de fondo.
+- `EditText`: campo de entrada de texto.
+- `Button`: elemento interactivo posicionado sobre la imagen.
+
+────────────────────────────────────────────────────────────
+-->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- 
+    Imagen de fondo (ocupa todo el espacio)
+    - Escala ajustada al tamaño del contenedor (fitXY)
+    -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/image1"
+        android:contentDescription="Imagen de fondo" />
+
+    <!-- 
+    EditText superpuesto en la parte superior
+    - Centrado horizontalmente con layout_gravity="top|center_horizontal"
+    -->
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="32dp"
+        android:hint="Ingresa tu nombre"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <!-- 
+    Botón superpuesto en la parte inferior derecha
+    - Se coloca con layout_gravity="bottom|end"
+    -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        android:padding="12dp" />
+
+    <!-- 
+    Texto centrado en pantalla (layout_gravity="center")
+    - Se dibuja por encima de la imagen de fondo
+    -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:background="@android:color/holo_blue_dark" />
+</FrameLayout>

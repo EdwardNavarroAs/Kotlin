@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 ────────────────────────────────────────────────────────────
-🧠 CAPÍTULO 2: ScrollView – Diseño Deslizable en Android
+CAPÍTULO 2: ScrollView – Diseño Deslizable en Android
 ────────────────────────────────────────────────────────────
 
-📌 ¿Qué es ScrollView?
+¿Qué es ScrollView?
 
 ScrollView es un contenedor que permite a los usuarios desplazarse
 (verticalmente o horizontalmente) cuando el contenido excede el tamaño
 visible de la pantalla.
 
-✔️ Solo puede tener un hijo directo.
-✔️ Generalmente se usa con un LinearLayout dentro.
-✔️ Solo permite desplazamiento en una dirección (no ambas a la vez).
+Solo puede tener un hijo directo.
+Generalmente se usa con un LinearLayout dentro.
+Solo permite desplazamiento en una dirección (no ambas a la vez).
 
-📌 Conceptos aplicados en este capítulo:
+Conceptos aplicados en este capítulo:
 
 1. ScrollView:
    - Contenedor que agrega capacidad de desplazamiento vertical.
@@ -35,7 +35,6 @@ visible de la pantalla.
    - Hijo (LinearLayout) = wrap_content → crece según contenido.
 
 ────────────────────────────────────────────────────────────
-👉 A continuación se muestra un ejemplo práctico con scroll.
 -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
