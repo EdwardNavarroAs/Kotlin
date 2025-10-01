@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+────────────────────────────────────────────────────────────
+🧠 CAPÍTULO 2: ScrollView – Diseño Deslizable en Android
+────────────────────────────────────────────────────────────
+
+📌 ¿Qué es ScrollView?
+
+ScrollView es un contenedor que permite a los usuarios desplazarse
+(verticalmente o horizontalmente) cuando el contenido excede el tamaño
+visible de la pantalla.
+
+✔️ Solo puede tener un hijo directo.
+✔️ Generalmente se usa con un LinearLayout dentro.
+✔️ Solo permite desplazamiento en una dirección (no ambas a la vez).
+
+📌 Conceptos aplicados en este capítulo:
+
+1. ScrollView:
+   - Contenedor que agrega capacidad de desplazamiento vertical.
+
+2. LinearLayout (dentro de ScrollView):
+   - Permite organizar los elementos como lista vertical.
+   - Es el hijo directo del ScrollView (requisito).
+
+3. TextView y Button repetidos:
+   - Para simular una pantalla larga que necesita scroll.
+
+4. padding y background:
+   - padding en ScrollView → espacio interno general.
+   - background en LinearLayout → color que contiene los elementos.
+
+5. Layout height:
+   - ScrollView = match_parent → ocupa la pantalla.
+   - Hijo (LinearLayout) = wrap_content → crece según contenido.
+
+────────────────────────────────────────────────────────────
+👉 A continuación se muestra un ejemplo práctico con scroll.
+-->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <!-- 
+    ScrollView solo admite un hijo. Aquí usamos LinearLayout vertical 
+    para organizar los elementos.
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/holo_blue_light">
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido al ScrollView"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:padding="12dp"
+            android:background="@android:color/holo_blue_dark" />
+
+        <!-- Texto explicativo -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Desliza hacia abajo para ver más contenido"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Contenido repetido para habilitar el scroll -->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Botón 1"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Botón 2"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contenido adicional 1"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/holo_green_light" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contenido adicional 2"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/holo_green_dark" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Botón 3"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Botón 4"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Botón 5"
+            android:layout_marginTop="8dp" />
+
+        <!-- Final -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fin del contenido"
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:gravity="center" />
+    </LinearLayout>
+
+</ScrollView>
