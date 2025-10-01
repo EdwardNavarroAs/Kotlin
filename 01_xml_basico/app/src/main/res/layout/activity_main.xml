@@ -1,19 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!--
+────────────────────────────────────────────────────────────
+🧠 CAPÍTULO 1: Fundamentos de Interfaces en XML - Android
+────────────────────────────────────────────────────────────
+
+Este archivo muestra los elementos fundamentales para crear interfaces en Android usando XML.
+
+📌 CONCEPTOS CLAVE
+
+1. LinearLayout:
+   - Es un contenedor que organiza los elementos (hijos) en una sola dirección: vertical u horizontal.
+   - El orden de los elementos importa.
+   - Atributo clave: android:orientation="vertical" o "horizontal".
+
+2. wrap_content vs match_parent:
+   - wrap_content → el tamaño se ajusta al contenido del elemento.
+   - match_parent → el elemento ocupa todo el espacio disponible de su contenedor.
+
+3. dp (density-independent pixels):
+   - Unidad usada para márgenes, padding, tamaños.
+   - Se adapta automáticamente a distintas densidades de pantalla.
+
+4. sp (scale-independent pixels):
+   - Unidad para tamaños de texto. Similar a dp, pero respeta las configuraciones de accesibilidad del usuario.
+
+5. padding vs margin:
+   - padding → espacio INTERNO entre el contenido y el borde del elemento.
+   - margin → espacio EXTERNO entre un elemento y los que lo rodean.
+
+6. gravity vs layout_gravity:
+   - gravity → alinea el contenido DENTRO del elemento (como centrar texto dentro de un botón).
+   - layout_gravity → alinea el elemento RESPECTO a su contenedor.
+
+7. tools:context:
+   - Es un atributo de diseño usado solo por Android Studio.
+   - No afecta el comportamiento en tiempo de ejecución, pero ayuda a previsualizar la actividad correcta.
+
+8. View vacía:
+   - La etiqueta <View> sin contenido puede usarse como separador visual, caja de color, espaciador, etc.
+
+────────────────────────────────────────────────────────────
+👉 A continuación, se presentan ejemplos prácticos con estos conceptos.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="16dp"
+    android:background="@android:color/holo_orange_light"
     tools:context=".MainActivity">
 
+    <!--
+    TextView con wrap_content
+    - wrap_content: se adapta al texto.
+    - Fondo azul claro para diferenciar.
+    -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@android:color/holo_blue_bright"
+        android:text="wrap content!" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--
+    TextView con match_parent
+    - Ocupa todo el ancho disponible.
+    -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:text="match parent" />
+
+    <!--
+    Botón básico
+    - Se ajusta al tamaño de su contenido.
+    -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="botón de prueba" />
+
+    <!--
+    LinearLayout horizontal (anidado)
+    - Organiza elementos en fila.
+    - gravity="end|center_vertical" → contenido alineado a la derecha y centrado verticalmente.
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:orientation="horizontal"
+        android:gravity="end|center_vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="botón de prueba" />
+
+        <!-- View vacía usada como cuadro visual -->
+        <View
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@android:color/holo_green_light" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="botón de prueba" />
+    </LinearLayout>
+
+    <!--
+    Segundo bloque: demostración de padding, margin, textSize y textColor.
+    - Se muestran también textos explicativos en pantalla.
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/holo_red_light">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Texto con estilos y espaciado"
+            android:padding="8dp"
+            android:layout_margin="8dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_purple" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔹 dp = píxeles independientes de densidad (tamaños, márgenes)"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔹 sp = píxeles independientes de escala (para texto accesible)"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+</LinearLayout>
