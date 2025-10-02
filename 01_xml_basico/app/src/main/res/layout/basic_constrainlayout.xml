@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+────────────────────────────────────────────────────────────
+ CAPÍTULO 4: ConstraintLayout – Diseño Flexible en Android
+────────────────────────────────────────────────────────────
+
+📌 ¿Qué es ConstraintLayout?
+
+ConstraintLayout es un tipo de contenedor (layout) avanzado que permite 
+crear interfaces complejas sin necesidad de anidar múltiples layouts. 
+Permite definir la posición de cada vista de forma precisa a través 
+de "constraints" o restricciones.
+
+────────────────────────────────────────────────────────────
+📌 ¿Qué es una Constraint?
+
+Una constraint es una regla de alineación o anclaje que indica cómo 
+debe posicionarse un elemento respecto a otro (o al contenedor).
+
+Cada vista necesita **al menos una constraint horizontal y una vertical**, 
+de lo contrario el diseño no funcionará y mostrará errores.
+
+Ejemplos:
+- app:layout_constraintTop_toTopOf="parent" → ancla arriba al padre.
+- app:layout_constraintBottom_toTopOf="@id/otraVista" → se posiciona encima de otra vista.
+- app:layout_constraintStart_toStartOf="parent" → ancla al borde izquierdo.
+- app:layout_constraintEnd_toEndOf="parent" → ancla al borde derecho.
+
+────────────────────────────────────────────────────────────
+✅ Ventajas de ConstraintLayout:
+- Reduce el número de layouts anidados (mejor rendimiento).
+- Permite usar herramientas visuales (como Layout Editor).
+- Muy flexible para crear diseños adaptativos y complejos.
+────────────────────────────────────────────────────────────
+-->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
+
+    <!-- 
+    🟦 TÍTULO
+    Centrado horizontalmente, anclado arriba del contenedor.
+    -->
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formulario de acceso"
+        android:textSize="22sp"
+        android:textColor="@android:color/black"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- 
+    🟨 CAMPO DE TEXTO PRINCIPAL
+    - layout_width="0dp" → ocupa el espacio definido entre sus constraints
+    - Anclado al start y end del contenedor (horizontal).
+    - Posicionado debajo del título (vertical).
+    -->
+    <EditText
+        android:id="@+id/entrada_usuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Usuario"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        app:layout_constraintTop_toBottomOf="@id/titulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="24dp" />
+
+    <!-- 
+    🟩 BOTÓN DE ACCIÓN
+    - Se posiciona debajo del campo de texto.
+    - Centrado horizontalmente con constraints al start y end de parent.
+    -->
+    <Button
+        android:id="@+id/boton_ingresar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ingresar"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/entrada_usuario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- 
+    🖼️ IMAGEN LATERAL (DERECHA)
+    - Centrada verticalmente a la derecha del contenedor.
+    - Se mantiene recortada y centrada con scaleType="centerCrop".
+    -->
+    <ImageView
+        android:id="@+id/imagen_lateral"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/image1"
+        android:scaleType="centerCrop"
+        android:contentDescription="Imagen decorativa"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
+
+    <!-- 
+    🧭 GUIDELINE
+    - Línea invisible al 30% del ancho.
+    - layout_constraintGuide_percent="0.3" → 30% del contenedor.
+    -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <!-- 
+    🔹 TEXTO GUIADO
+    - Alineado con la guideline del 30%.
+    - Ideal para alinear sin usar márgenes fijos.
+    -->
+    <TextView
+        android:id="@+id/texto_guiado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alineado a Guideline"
+        android:textSize="16sp"
+        android:textColor="@android:color/holo_blue_dark"
+        app:layout_constraintTop_toBottomOf="@id/boton_ingresar"
+        app:layout_constraintStart_toStartOf="@id/guideline_vertical"
+        android:layout_marginTop="32dp" />
+
+    <!-- 
+    🧪 EJEMPLO 1: Alinear elementos horizontalmente con constraints
+    - EditText y botón uno al lado del otro.
+    - layout_width="0dp" + margin + constraints
+    -->
+    <EditText
+        android:id="@+id/edittext_inline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Escribe algo..."
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text"
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/texto_guiado"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_inline"
+        android:layout_marginTop="24dp" />
+
+    <Button
+        android:id="@+id/button_inline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/edittext_inline"
+        app:layout_constraintBottom_toBottomOf="@id/edittext_inline"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 
+    🧪 EJEMPLO 2: Alinear a una imagen a la izquierda
+    - Imagen como ancla
+    - EditText y botón alineados a la derecha de la imagen
+    -->
+    <ImageView
+        android:id="@+id/imagen_izquierda"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/image1"
+        android:scaleType="centerCrop"
+        android:contentDescription="Imagen izquierda"
+        app:layout_constraintTop_toBottomOf="@id/button_inline"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="40dp" />
+
+    <EditText
+        android:id="@+id/edittext_al_lado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Texto alineado"
+        android:padding="8dp"
+        android:textColor="@android:color/black"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toTopOf="@id/imagen_izquierda"
+        app:layout_constraintStart_toEndOf="@id/imagen_izquierda"
+        app:layout_constraintEnd_toStartOf="@id/boton_al_lado" />
+
+    <Button
+        android:id="@+id/boton_al_lado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/edittext_al_lado"
+        app:layout_constraintBottom_toBottomOf="@id/edittext_al_lado"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

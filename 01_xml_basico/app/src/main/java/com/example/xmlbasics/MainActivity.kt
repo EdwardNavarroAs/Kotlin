@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         // setContentView(R.layout.basic_interface)
 
         // 🔹 Capítulo 2: ScrollView – Diseño deslizable en Android
-        setContentView(R.layout.framelayout_positioning)
+        setContentView(R.layout.basic_constrainlayout)
 
         // Ajuste automático de padding para respetar las barras del sistema (status bar, nav bar)
         // Evita que los elementos se solapen con la barra superior/inferior del sistema
