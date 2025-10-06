@@ -2,118 +2,162 @@ package com.example.kotlin
 
 /*
 ────────────────────────────────────────────────────────────
- CAPÍTULO 2: Tipos de Datos en Kotlin
+CAPÍTULO 2: Tipos de Datos en Kotlin
 ────────────────────────────────────────────────────────────
 
- ¿Qué es un tipo de dato?
-Los tipos de datos (data types) determinan qué tipo de valores pueden
-almacenarse en una variable. Kotlin es un lenguaje fuertemente tipado,
-lo que significa que cada variable debe tener un tipo definido
-(o inferido por el compilador).
+¿QUÉ ES UN TIPO DE DATO?
+
+Los tipos de datos (data types) determinan qué clase de información puede
+almacenarse en una variable: números, texto, booleanos, etc.
+
+Kotlin es un lenguaje fuertemente tipado, lo que significa que el tipo
+de cada variable está definido (de forma explícita o inferida).
 
 ────────────────────────────────────────────────────────────
- Tipos de Datos Primarios en Kotlin:
+TIPOS DE DATOS PRIMARIOS EN KOTLIN
 ────────────────────────────────────────────────────────────
 
-▶ Números Enteros:
-- Byte (8 bits): -128 a 127
-- Short (16 bits): -32,768 a 32,767
-- Int (32 bits): el más usado por defecto
-- Long (64 bits): usa sufijo L → ejemplo: 100000L
+1. NÚMEROS ENTEROS
+─────────────────────────────────────────────
+- Byte  → 8 bits      → Rango: -128 a 127
+- Short → 16 bits     → Rango: -32.768 a 32.767
+- Int   → 32 bits     → Rango: ±2 mil millones (valor por defecto)
+- Long  → 64 bits     → Se usa sufijo `L` (ej. 100000L)
 
-▶ Números Decimales:
-- Float (32 bits con decimales, menos preciso, sufijo `f`)
-- Double (64 bits con decimales, más preciso, usado por defecto)
+2. NÚMEROS DECIMALES (PUNTO FLOTANTE)
+─────────────────────────────────────────────
+- Float  → 32 bits → Menor precisión (~6-7 dígitos decimales). Requiere sufijo `f`.
+- Double → 64 bits → Mayor precisión (~15-16 dígitos). Valor por defecto para decimales.
 
-  DIFERENCIA CLAVE:
-- **Float**: ocupa menos memoria (32 bits) pero tiene menos precisión decimal
-  (aprox. 6-7 cifras decimales).
-- **Double**: ocupa más memoria (64 bits) y tiene mayor precisión decimal
-  (aprox. 15-16 cifras decimales). Se usa por defecto en Kotlin.
+DIFERENCIA ENTRE FLOAT Y DOUBLE:
+- Float → Menor precisión, menos memoria. Útil para sensores, gráficos simples.
+- Double → Mayor precisión, recomendado para cálculos matemáticos.
 
-▶ Boolean:
-- Solo puede tener dos valores: `true` o `false`
+3. BOOLEANOS
+─────────────────────────────────────────────
+- Boolean → Solo dos posibles valores: `true` o `false`
 
-▶ Char:
-- Representa un solo carácter entre comillas simples, ej: 'A'
+4. CARACTERES
+─────────────────────────────────────────────
+- Char → Representa un único carácter. Se declara con comillas simples: 'A'
 
-▶ String:
-- Cadena de texto entre comillas dobles: "Hola Kotlin"
+5. STRINGS (CADENAS DE TEXTO)
+─────────────────────────────────────────────
+- String → Cadena de caracteres entre comillas dobles: "Hola mundo"
+           Kotlin lo trata como un objeto inmutable.
 
 ────────────────────────────────────────────────────────────
-Ejemplos:
+EJEMPLOS PRÁCTICOS
 ────────────────────────────────────────────────────────────
 */
 
 fun main() {
-    // ───────────────────────────────────────────────
+
+    // ────────────────
     // NÚMEROS ENTEROS
-    // ───────────────────────────────────────────────
+    // ────────────────
     val edad: Int = 30
-    val poblacion: Long = 7_800_000_000L // L obligatorio para Long
     val dias: Byte = 100
     val maximo: Short = 32_000
+    val poblacion: Long = 7_800_000_000L // sufijo obligatorio para Long
 
-    // ───────────────────────────────────────────────
-    // NÚMEROS DECIMALES (FLOAT vs DOUBLE)
-    // ───────────────────────────────────────────────
-    val temperatura: Float = 36.6f // Float (32 bits) requiere la 'f'
-    val pi: Double = 3.141592653589793 // Double (64 bits, más precisión)
+    // ────────────────
+    // DECIMALES (Float y Double)
+    // ────────────────
+    val temperatura: Float = 36.6f   // sufijo f necesario
+    val pi: Double = 3.1415926535   // mayor precisión
 
     println("Temperatura (Float): $temperatura")
-    println("Pi (Double): $pi")
+    println("Valor de Pi (Double): $pi")
 
-    // ───────────────────────────────────────────────
+    // ────────────────
     // BOOLEANOS
-    // ───────────────────────────────────────────────
+    // ────────────────
     val esEstudiante: Boolean = true
     val tieneTrabajo: Boolean = false
-    println("¿Estudiante? $esEstudiante - ¿Trabaja? $tieneTrabajo")
+    println("¿Es estudiante?: $esEstudiante - ¿Tiene trabajo?: $tieneTrabajo")
 
-    // ───────────────────────────────────────────────
-    // CARACTER Y STRING
-    // ───────────────────────────────────────────────
+    // ────────────────
+    // CARACTERES
+    // ────────────────
     val letra: Char = 'K'
+    println("Letra inicial: $letra")
+
+    // ────────────────
+    // STRINGS (CADENAS DE TEXTO)
+    // ────────────────
+
+    // Declaración
     val nombre: String = "Kotlin"
-    println("Letra inicial: $letra - Lenguaje: $nombre")
+    println("Nombre del lenguaje: $nombre")
 
-    // ───────────────────────────────────────────────
+    // Concatenación
+    val saludo = "Hola, " + nombre
+    println(saludo)
+
+    // Interpolación de cadenas
+    val edadUsuario = 25
+    println("Edad del usuario: $edadUsuario años")
+
+    // Acceder a propiedades
+    println("Longitud del texto '$nombre': ${nombre.length}")
+
+    // Literales multilínea con triple comillas
+    val textoLargo = """
+        Este es un texto
+        que ocupa varias líneas.
+        Se usa """ + "\"\"\"" + """ para definirlo.
+    """.trimIndent()
+    println(textoLargo)
+
+    // Funciones comunes sobre strings
+    println(nombre.uppercase()) // "KOTLIN"
+    println(nombre.lowercase()) // "kotlin"
+    println(nombre.contains("lin")) // true
+
+    // ────────────────
     // INFERENCIA DE TIPO
-    // ───────────────────────────────────────────────
-    val ciudad = "Popayán"     // String
-    val decimal = 24.5         // Double por defecto
-    val activo = true          // Boolean
+    // ────────────────
+    val ciudad = "Popayán" // Kotlin infiere: String
+    val altura = 1.78       // Kotlin infiere: Double
+    val activo = true       // Boolean
 
-    println("Ciudad: $ciudad | Decimal: $decimal | ¿Activo?: $activo")
+    println("Ciudad: $ciudad - Altura: $altura - ¿Activo?: $activo")
 
-    // ───────────────────────────────────────────────
-    //  CONVERSIÓN DE TIPOS
-    // ───────────────────────────────────────────────
-    val numeroInt = 10
+    // ────────────────
+    // CONVERSIÓN EXPLÍCITA DE TIPOS
+    // ────────────────
+
+    val numeroInt = 42
     val numeroDouble = numeroInt.toDouble()
-    val stringToInt = "123".toInt()
+    val textoNumerico = "123"
+    val convertido = textoNumerico.toInt()
 
     println("Int → Double: $numeroDouble")
-    println("String → Int: $stringToInt")
+    println("String → Int: $convertido")
 
-    //  Kotlin no convierte automáticamente entre tipos (como en otros lenguajes)
+    // Kotlin NO permite conversiones implícitas como en otros lenguajes
 
-    // ───────────────────────────────────────────────
-    // TRUCO: CHAR → ASCII
-    // ───────────────────────────────────────────────
+    // ────────────────
+    // CONVERSIÓN DE CHAR A INT (ASCII)
+    // ────────────────
     val caracter = 'A'
-    val ascii = caracter.code
-    println("Carácter: $caracter → Código ASCII: $ascii")
+    val codigoAscii = caracter.code
+    println("Carácter '$caracter' → Código ASCII: $codigoAscii")
 }
 
 /*
 ────────────────────────────────────────────────────────────
- CONCLUSIONES:
+CONCLUSIONES DEL CAPÍTULO
 ────────────────────────────────────────────────────────────
-- Kotlin tiene una amplia variedad de tipos de datos.
-- **Float** (32 bits) → menos preciso, usar cuando no necesitas alta precisión.
-- **Double** (64 bits) → más preciso, se usa por defecto.
-- El tipo Int es el entero más común.
-- La inferencia automática facilita el desarrollo.
-- Las conversiones de tipo deben ser explícitas (no automáticas).
+
+- Kotlin es fuertemente tipado: cada variable tiene un tipo definido.
+- Los números enteros y decimales tienen tamaños y precisiones distintas.
+- Float y Double son distintos en precisión. Double es el más usado por defecto.
+- Strings son objetos inmutables que se pueden concatenar e interpolar.
+- El compilador puede inferir el tipo, pero también se puede declarar explícitamente.
+- Las conversiones de tipos deben hacerse de forma explícita (por ejemplo: toInt()).
+- Kotlin incluye herramientas útiles como `.uppercase()`, `.length`, `.contains()`.
+
+────────────────────────────────────────────────────────────
 */
