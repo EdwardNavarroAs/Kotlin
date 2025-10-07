@@ -467,6 +467,64 @@ fun imprimirNomina(trabajadores: List<Trabajador>) {
     println("Total a pagar: $total")
 }
 
+/*
+────────────────────────────────────────────────────────────
+COMPANION OBJECT (OBJETO DE COMPAÑÍA)
+────────────────────────────────────────────────────────────
+
+Un `companion object` se usa para definir valores o funciones
+que pertenecen a la clase en general, no a cada objeto individual.
+
+Se comporta como los “atributos estáticos” en otros lenguajes.
+*/
+
+class CalculadoraSimple {
+
+    fun sumar(a: Int, b: Int): Int = a + b
+
+    companion object {
+        const val AUTOR = "Equipo Kotlin"  // constante de clase
+
+        fun mostrarAutor() {
+            println("Calculadora creada por $AUTOR")
+        }
+    }
+}
+
+/*
+────────────────────────────────────────────────────────────
+ENUM CLASS (ENUMERACIONES)
+────────────────────────────────────────────────────────────
+
+Un `enum class` define un conjunto fijo de valores posibles.
+Son muy útiles para representar estados, tipos o categorías.
+*/
+
+enum class DiaSemana {
+    LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO
+}
+
+fun demoEnumClass() {
+    println("────────────────────────────────────")
+    println("DEMO ENUM CLASS — DÍAS DE LA SEMANA")
+    println("────────────────────────────────────")
+
+    val hoy = DiaSemana.MIERCOLES
+
+    // Comparación directa
+    if (hoy == DiaSemana.MIERCOLES) {
+        println("Hoy es ${hoy.name}: ¡mitad de semana!")
+    }
+
+    // Recorrer todos los valores
+    println("\nLista completa de días:")
+    for (dia in DiaSemana.values()) {
+        println("- $dia")
+    }
+
+    // Mostrar nombre y posición
+    println("\nEl día ${hoy.name} ocupa la posición ${hoy.ordinal}.")
+}
 
 /*
 ────────────────────────────────────────────────────────────
@@ -523,6 +581,12 @@ fun main() {
         PorHoras("Ana", tarifaHora = 40.0, horas = 80)
     )
     imprimirNomina(nomina)
+
+    // Companion object
+    CalculadoraSimple.mostrarAutor() // Acceso al companion object sin crear instancia
+
+    // Enum class
+    demoEnumClass()
 }
 
 /*
