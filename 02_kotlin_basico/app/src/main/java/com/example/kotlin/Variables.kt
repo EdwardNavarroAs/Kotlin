@@ -129,5 +129,76 @@ fun main() {
     // También puedes usar el operador Elvis `?:`
     val longitudNombre = nombreOpcional?.length ?: 0
     println("Longitud del nombre: $longitudNombre")
+
+    /*
+    ──────────────────────────────────────────────
+    VARIABLES AVANZADAS: GLOBALES, CONSTANTES Y ASIGNACIÓN TARDÍA
+    ──────────────────────────────────────────────
+
+    En Kotlin puedes declarar variables fuera de cualquier función.
+    Estas se llaman variables top-level (globales para ese archivo).
+
+    - `const val`: crea una constante en tiempo de compilación.
+      Solo se permite a nivel top-level o dentro de objetos/companion.
+    - `by lazy`: inicializa un valor inmutable solo cuando se usa.
+    - `lateinit var`: inicializa más tarde una variable mutable no nula.
+      Solo es válido en propiedades de clase, no en variables locales.
+    */
+
+    println("\nEjemplo de constante global y variable global:")
+    println("Máximo de usuarios permitidos: $MAX_USUARIOS")
+    contadorGlobal++
+    println("Contador global actualizado: $contadorGlobal")
+
+    println("\nEjemplo de inicialización perezosa (by lazy):")
+    println("Antes de usar configCargada")
+    println("configCargada = $configCargada") // aquí se inicializa por primera vez
+
+    println("\nEjemplo de lateinit var (en clase):")
+    val usuario = Usuario()
+    usuario.inicializarNombre("Pedro")
+    println("Usuario lateinit: ${usuario.nombre}")
 }
 
+/*
+──────────────────────────────────────────────
+Variables globales y constantes declaradas fuera de main()
+──────────────────────────────────────────────
+*/
+
+// Constante de tiempo de compilación (solo top-level u objetos)
+const val MAX_USUARIOS = 100
+
+// Variable global mutable (evitar en proyectos grandes si no es necesario)
+var contadorGlobal = 0
+
+// Variable global inmutable (se asigna una sola vez)
+val nombreAplicacion = "MiApp"
+
+// Inicialización perezosa global (no se evalúa hasta que se use)
+val configCargada: String by lazy {
+    println("Cargando configuración global...")
+    "Configuración lista"
+}
+
+// Clase para demostrar lateinit var (asignación tardía)
+class Usuario {
+    // lateinit solo se permite en propiedades mutables (var) no nulas
+    lateinit var nombre: String
+    fun inicializarNombre(valor: String) {
+        nombre = valor // asignación tardía
+    }
+}
+
+/*
+──────────────────────────────────────────────
+CONCLUSIONES:
+──────────────────────────────────────────────
+- `val`: valor inmutable (una sola asignación).
+- `var`: valor mutable (puede cambiar).
+- Variables top-level: se declaran fuera de funciones y son globales para ese archivo.
+- `const val`: crea constantes en tiempo de compilación (solo top-level u objetos).
+- `by lazy`: inicialización diferida para valores inmutables.
+- `lateinit var`: inicialización tardía para variables mutables (en clases).
+- Buenas prácticas: usar constantes y val cuando sea posible, y variables globales con moderación.
+*/
