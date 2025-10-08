@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+────────────────────────────────────────────────────────────
+PLANTILLA BASE MODERNA CON MATERIAL DESIGN 3
+────────────────────────────────────────────────────────────
+
+Esta plantilla será utilizada como base en todos los capítulos
+de integración XML + Kotlin. Contiene la mayoría de los
+componentes visuales más comunes para ejercicios de interacción.
+
+COMPONENTES PRINCIPALES:
+- Imagen (ImageView)
+- TextInputLayout + TextInputEditText
+- RadioGroup (selección única)
+- CheckBox (selección múltiple)
+- Switch (activación/desactivación)
+- Slider (ajuste numérico)
+- MaterialButton (acciones)
+- ProgressBar (indicador de carga)
+- TextView (resultados dinámicos)
+────────────────────────────────────────────────────────────
+-->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="?android:colorBackground"
+    tools:context=".MainActivity">
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    IMAGEN SUPERIOR
+    - Muestra un ícono o logo principal.
+    - Se usará para prácticas con ImageView.
+    ────────────────────────────────────────────────────────────
+    -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/outline_account_circle_24"
+        android:contentDescription="Logo principal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    TÍTULO PRINCIPAL
+    - Texto centrado que introduce el formulario.
+    ────────────────────────────────────────────────────────────
+    -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formulario general de usuario"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        app:layout_constraintTop_toBottomOf="@id/ivLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    CAMPO DE NOMBRE (TextInputLayout + EditText)
+    - Incluye ícono inicial y validación visual.
+    ────────────────────────────────────────────────────────────
+    -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilNombre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nombre completo"
+        app:startIconDrawable="@drawable/ic_person_black_24dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:endIconMode= "clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    SELECCIÓN DE GÉNERO (RadioGroup)
+    ────────────────────────────────────────────────────────────
+    -->
+    <RadioGroup
+        android:id="@+id/rgGenero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tilNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rbMasculino"
+            android:text="Masculino"/>
+
+        <RadioButton
+            android:id="@+id/rbFemenino"
+            android:text="Femenino"/>
+    </RadioGroup>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    CHECKBOX Y SWITCH
+    - Checkbox: selección opcional.
+    - Switch: activación o desactivación de modo extra.
+    ────────────────────────────────────────────────────────────
+    -->
+    <CheckBox
+        android:id="@+id/cbSuscripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deseo recibir noticias"
+        app:layout_constraintTop_toBottomOf="@id/rgGenero"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/swModoOscuro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Modo oscuro"
+        app:layout_constraintTop_toBottomOf="@id/cbSuscripcion"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    SLIDER (CONTROL DESLIZANTE)
+    - Permite seleccionar un valor numérico continuo.
+    ────────────────────────────────────────────────────────────
+    -->
+    <com.google.android.material.slider.Slider
+        android:id="@+id/sliderEdad"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:valueFrom="0"
+        android:valueTo="100"
+        android:stepSize="1"
+        android:value="25"
+        app:layout_constraintTop_toBottomOf="@id/swModoOscuro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    BOTÓN PRINCIPAL
+    - Al pulsarse, procesa los datos del formulario.
+    ────────────────────────────────────────────────────────────
+    -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEnviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        app:layout_constraintTop_toBottomOf="@id/sliderEdad"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    INDICADOR DE PROGRESO (inicialmente invisible)
+    ────────────────────────────────────────────────────────────
+    -->
+    <ProgressBar
+        android:id="@+id/progressEnvio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/btnEnviar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <!--
+    ────────────────────────────────────────────────────────────
+    RESULTADO FINAL (TextView)
+    - Mostrará los datos procesados en Kotlin.
+    ────────────────────────────────────────────────────────────
+    -->
+    <TextView
+        android:id="@+id/tvResultado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Resultado aparecerá aquí"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        app:layout_constraintTop_toBottomOf="@id/progressEnvio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
