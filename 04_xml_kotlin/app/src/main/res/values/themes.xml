@@ -1,0 +1,33 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+    ─────────────────────────────────────────────────────────────
+    TEMA CLARO PRINCIPAL DE LA APLICACIÓN
+    ─────────────────────────────────────────────────────────────
+    Se aplica automáticamente cuando el dispositivo está en modo claro.
+    Hereda de Theme.Material3.DayNight.NoActionBar para compatibilidad
+    con Material Design 3 y soporte dinámico entre modos.
+    ─────────────────────────────────────────────────────────────
+    -->
+    <style name="Base.Theme.XmlKotlin" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Colores principales -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Fondo general -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+
+        <!-- Barras transparentes para edge-to-edge -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <!-- Sombras y esquinas redondeadas Material3 -->
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Material3.Corner.Medium</item>
+    </style>
+
+    <!-- Tema público usado por la aplicación -->
+    <style name="Theme.XmlKotlin" parent="Base.Theme.XmlKotlin" />
+</resources>
