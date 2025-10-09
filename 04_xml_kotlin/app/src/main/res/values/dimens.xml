@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Margenes y paddings -->
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+
+    <!-- Tamaños comunes -->
+    <dimen name="avatar_size">96dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+
+    <!-- Radio de esquinas -->
+    <dimen name="card_corner_radius">12dp</dimen>
+</resources>

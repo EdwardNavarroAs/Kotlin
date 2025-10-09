@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Colores principales del tema -->
     <color name="purple_200">#BB86FC</color>
     <color name="purple_500">#6200EE</color>
     <color name="purple_700">#3700B3</color>
     <color name="teal_200">#03DAC5</color>
     <color name="teal_700">#018786</color>
-    <color name="formBackground">#F5F6FA</color>
+
+    <!-- Colores base de texto y fondos -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Fondo general del formulario -->
+    <color name="formBackground">#FAFAFA</color>
+
+    <!-- Divisores y detalles -->
+    <color name="dividerColor">#E0E0E0</color>
+
+    <!-- Estados y acentos -->
+    <color name="success_green">#4CAF50</color>
+    <color name="error_red">#D32F2F</color>
+    <color name="warning_orange">#FFA000</color>
 </resources>

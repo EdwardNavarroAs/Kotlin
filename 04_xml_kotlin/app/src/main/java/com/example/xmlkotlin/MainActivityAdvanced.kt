@@ -19,26 +19,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.slider.Slider
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textview.MaterialTextView
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.snackbar.Snackbar
-import android.content.res.ColorStateList
-import android.widget.ImageView
-import android.widget.ImageButton
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
 import com.example.xmlkotlin.databinding.ActivityMainAdvancedBinding
 
 class MainActivityAdvanced : AppCompatActivity() {
@@ -47,7 +41,6 @@ class MainActivityAdvanced : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainAdvancedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -80,7 +73,11 @@ class MainActivityAdvanced : AppCompatActivity() {
         val tvResumenCard = findViewById<TextView>(R.id.tvResumenCard)
         val btnRefrescar = findViewById<ImageButton>(R.id.btnRefrescar)
 
-        // Imagen inicial
+        /*
+        ─────────────────────────────────────────────
+        IMAGEN INICIAL (descargada con Glide)
+        ─────────────────────────────────────────────
+        */
         val imageUrl = "https://images.alphacoders.com/130/1303667.jpg"
         Glide.with(this).load(imageUrl).circleCrop().into(ivLogo)
 
@@ -91,7 +88,7 @@ class MainActivityAdvanced : AppCompatActivity() {
         */
         etFecha.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Selecciona tu fecha de nacimiento")
+                .setTitleText(getString(R.string.hint_birthdate))
                 .build()
             datePicker.addOnPositiveButtonClickListener {
                 etFecha.setText(datePicker.headerText)
@@ -111,9 +108,10 @@ class MainActivityAdvanced : AppCompatActivity() {
                 if (chip.isChecked) seleccionados.add(chip.text.toString())
             }
             tvResumenCard.text = if (seleccionados.isEmpty()) {
-                "Ningún interés seleccionado"
+                getString(R.string.no_intereses)
             } else {
-                "Intereses: ${seleccionados.joinToString(", ")}"
+                getString(R.string.intereses_prefix) + " " +
+                        seleccionados.joinToString(", ")
             }
         }
         chipGroup.setOnCheckedStateChangeListener { _, _ -> actualizarResumen() }
@@ -126,34 +124,35 @@ class MainActivityAdvanced : AppCompatActivity() {
         btnEnviar.setOnClickListener {
             val nombre = etNombre.text?.toString()?.trim().orEmpty()
             if (nombre.isEmpty()) {
-                tilNombre.error = "Por favor, ingresa tu nombre"
+                tilNombre.error = getString(R.string.error_nombre_requerido)
                 etNombre.requestFocus()
                 return@setOnClickListener
             } else tilNombre.error = null
 
             val genero = when (rgGenero.checkedRadioButtonId) {
-                rbMasculino.id -> "Masculino"
-                rbFemenino.id -> "Femenino"
-                else -> "No especificado"
+                rbMasculino.id -> getString(R.string.text_gender_male)
+                rbFemenino.id -> getString(R.string.text_gender_female)
+                else -> getString(R.string.text_gender_unknown)
             }
+
             val edad = sliderEdad.value.toInt()
-            val fecha = etFecha.text.toString().ifEmpty { "No definida" }
-            val suscripcion = if (cbSuscripcion.isChecked) "Sí" else "No"
+            val fecha = etFecha.text.toString().ifEmpty { getString(R.string.text_no_definida) }
+            val suscripcion = if (cbSuscripcion.isChecked)
+                getString(R.string.text_si)
+            else
+                getString(R.string.text_no)
+
             val intereses = tvResumenCard.text.toString()
 
-            val resumen = """
-                Nombre: $nombre
-                Fecha de nacimiento: $fecha
-                Género: $genero
-                Edad: $edad
-                Suscripción: $suscripcion
-                $intereses
-            """.trimIndent()
+            val resumen = getString(
+                R.string.resumen_datos,
+                nombre, fecha, genero, edad, suscripcion, intereses
+            )
 
             val dialog = AlertDialog.Builder(this)
-                .setTitle("Confirmar envío")
-                .setMessage("¿Deseas enviar el formulario?")
-                .setPositiveButton("Sí") { _, _ ->
+                .setTitle(getString(R.string.dialog_titulo_confirmar))
+                .setMessage(getString(R.string.dialog_mensaje_confirmar))
+                .setPositiveButton(getString(R.string.text_si)) { _, _ ->
                     progressEnvio.visibility = View.VISIBLE
                     btnEnviar.isEnabled = false
 
@@ -161,10 +160,14 @@ class MainActivityAdvanced : AppCompatActivity() {
                         progressEnvio.visibility = View.GONE
                         btnEnviar.isEnabled = true
                         tvResultado.text = resumen
-                        Snackbar.make(binding.main, "Datos enviados correctamente ✅", Snackbar.LENGTH_LONG).show()
+                        Snackbar.make(
+                            binding.main,
+                            getString(R.string.msg_enviado_ok),
+                            Snackbar.LENGTH_LONG
+                        ).show()
                     }, 900)
                 }
-                .setNegativeButton("No", null)
+                .setNegativeButton(getString(R.string.text_no), null)
                 .create()
 
             dialog.show()
@@ -183,10 +186,15 @@ class MainActivityAdvanced : AppCompatActivity() {
             swModoOscuro.isChecked = false
             sliderEdad.value = 25f
             chipGroup.clearCheck()
-            tvResultado.text = "Formulario reiniciado."
-            tvResumenCard.text = "Aquí aparecerá un resumen interactivo"
+            tvResultado.text = getString(R.string.msg_form_reiniciado)
+            tvResumenCard.text = getString(R.string.msg_card_placeholder)
             Glide.with(this).load(imageUrl).circleCrop().into(ivLogo)
-            Snackbar.make(btnRefrescar, "Formulario limpiado", Snackbar.LENGTH_SHORT).show()
+
+            Snackbar.make(
+                btnRefrescar,
+                getString(R.string.msg_refresh),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 }

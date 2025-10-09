@@ -1,3 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">XmlKotlin</string>
+    <!-- ────────────────────────────────────────────────
+         TÍTULOS Y NOMBRES GENERALES
+         ──────────────────────────────────────────────── -->
+    <string name="app_name">Formulario Avanzado</string>
+    <string name="form_title">Formulario general de usuario</string>
+
+    <!-- ────────────────────────────────────────────────
+         ETIQUETAS DE CAMPOS
+         ──────────────────────────────────────────────── -->
+    <string name="hint_name">Nombre completo</string>
+    <string name="hint_birthdate">Fecha de nacimiento</string>
+    <string name="text_gender_male">Masculino</string>
+    <string name="text_gender_female">Femenino</string>
+    <string name="text_gender_unknown">No especificado</string>
+    <string name="text_subscription">Deseo recibir noticias</string>
+    <string name="text_dark_mode">Modo oscuro</string>
+    <string name="text_send">Enviar</string>
+
+    <!-- ────────────────────────────────────────────────
+         OPCIONES Y VALORES BÁSICOS
+         ──────────────────────────────────────────────── -->
+    <string name="text_si">Sí</string>
+    <string name="text_no">No</string>
+    <string name="text_no_definida">No definida</string>
+
+    <!-- ────────────────────────────────────────────────
+         MENSAJES Y PLACEHOLDERS
+         ──────────────────────────────────────────────── -->
+    <string name="msg_result_placeholder">Resultado aparecerá aquí</string>
+    <string name="msg_card_placeholder">Aquí aparecerá un resumen interactivo</string>
+    <string name="msg_refresh">Formulario limpiado</string>
+    <string name="msg_form_reiniciado">Formulario reiniciado.</string>
+    <string name="msg_enviado_ok">Datos enviados correctamente ✅</string>
+    <string name="no_intereses">Ningún interés seleccionado</string>
+    <string name="intereses_prefix">Intereses:</string>
+
+    <!-- ────────────────────────────────────────────────
+         MENSAJES DE ERROR Y VALIDACIÓN
+         ──────────────────────────────────────────────── -->
+    <string name="error_nombre_requerido">Por favor, ingresa tu nombre</string>
+
+    <!-- ────────────────────────────────────────────────
+         DIÁLOGOS Y CONFIRMACIONES
+         ──────────────────────────────────────────────── -->
+    <string name="dialog_titulo_confirmar">Confirmar envío</string>
+    <string name="dialog_mensaje_confirmar">¿Deseas enviar el formulario?</string>
+
+    <!-- ────────────────────────────────────────────────
+         FORMATO DE RESUMEN (usa placeholders con getString)
+         ──────────────────────────────────────────────── -->
+    <string name="resumen_datos">
+        Nombre: %1$s\n
+        Fecha de nacimiento: %2$s\n
+        Género: %3$s\n
+        Edad: %4$d\n
+        Suscripción: %5$s\n
+        %6$s
+    </string>
 </resources>

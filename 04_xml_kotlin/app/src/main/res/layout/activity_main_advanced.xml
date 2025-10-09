@@ -31,44 +31,44 @@ NOVEDADES EN ESTA VERSIÓN:
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="@dimen/margin_medium">
 
         <!-- IMAGEN SUPERIOR -->
         <ImageView
             android:id="@+id/ivLogo"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
             android:src="@drawable/outline_account_circle_24"
-            android:contentDescription="Logo principal"
+            android:contentDescription="@string/app_name"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="@dimen/margin_small" />
 
         <!-- TÍTULO PRINCIPAL -->
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Formulario general de usuario"
+            android:text="@string/form_title"
             android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
             app:layout_constraintTop_toBottomOf="@id/ivLogo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="@dimen/margin_small" />
 
         <!-- CAMPO DE NOMBRE -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilNombre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Nombre completo"
+            android:hint="@string/hint_name"
             app:startIconDrawable="@drawable/ic_person_black_24dp"
             app:endIconMode="clear_text"
             app:layout_constraintTop_toBottomOf="@id/tvTitulo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="@dimen/margin_medium">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etNombre"
@@ -82,12 +82,12 @@ NOVEDADES EN ESTA VERSIÓN:
             android:id="@+id/tilFecha"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Fecha de nacimiento"
+            android:hint="@string/hint_birthdate"
             app:startIconDrawable="@drawable/ic_calendar"
             app:layout_constraintTop_toBottomOf="@id/tilNombre"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="@dimen/margin_small">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFecha"
@@ -105,19 +105,19 @@ NOVEDADES EN ESTA VERSIÓN:
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/tilFecha"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="@dimen/margin_medium">
 
             <RadioButton
                 android:id="@+id/rbMasculino"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Masculino" />
+                android:text="@string/text_gender_male" />
 
             <RadioButton
                 android:id="@+id/rbFemenino"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Femenino" />
+                android:text="@string/text_gender_female" />
         </RadioGroup>
 
         <!-- SUSCRIPCIÓN Y MODO OSCURO -->
@@ -125,19 +125,19 @@ NOVEDADES EN ESTA VERSIÓN:
             android:id="@+id/cbSuscripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deseo recibir noticias"
+            android:text="@string/text_subscription"
             app:layout_constraintTop_toBottomOf="@id/rgGenero"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="@dimen/margin_small" />
 
         <com.google.android.material.materialswitch.MaterialSwitch
             android:id="@+id/swModoOscuro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modo oscuro"
+            android:text="@string/text_dark_mode"
             app:layout_constraintTop_toBottomOf="@id/cbSuscripcion"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="@dimen/margin_small" />
 
         <!-- SLIDER (Edad) -->
         <com.google.android.material.slider.Slider
@@ -151,18 +151,18 @@ NOVEDADES EN ESTA VERSIÓN:
             app:layout_constraintTop_toBottomOf="@id/swModoOscuro"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="@dimen/margin_medium" />
 
         <!-- BOTÓN PRINCIPAL -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEnviar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enviar"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/text_send"
             app:layout_constraintTop_toBottomOf="@id/sliderEdad"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="@dimen/margin_large" />
 
         <!-- PROGRESS BAR -->
         <ProgressBar
@@ -173,20 +173,20 @@ NOVEDADES EN ESTA VERSIÓN:
             app:layout_constraintTop_toBottomOf="@id/btnEnviar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="@dimen/margin_small" />
 
         <!-- RESULTADO FINAL -->
         <TextView
             android:id="@+id/tvResultado"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Resultado aparecerá aquí"
+            android:text="@string/msg_result_placeholder"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             app:layout_constraintTop_toBottomOf="@id/progressEnvio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="@dimen/margin_medium" />
 
         <!-- DIVIDER -->
         <com.google.android.material.divider.MaterialDivider
@@ -196,7 +196,8 @@ NOVEDADES EN ESTA VERSIÓN:
             app:layout_constraintTop_toBottomOf="@id/tvResultado"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="@dimen/margin_large"
+            android:background="@color/dividerColor" />
 
         <!-- CHIPGROUP -->
         <com.google.android.material.chip.ChipGroup
@@ -206,9 +207,9 @@ NOVEDADES EN ESTA VERSIÓN:
             app:layout_constraintTop_toBottomOf="@id/dividerExtra"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingHorizontal="@dimen/margin_small"
             app:chipSpacingVertical="4dp"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="@dimen/margin_medium">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipMusica"
@@ -240,13 +241,13 @@ NOVEDADES EN ESTA VERSIÓN:
             app:layout_constraintTop_toBottomOf="@id/chipGroupIntereses"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp"
-            app:cardCornerRadius="12dp"
+            android:layout_marginTop="@dimen/margin_large"
+            app:cardCornerRadius="@dimen/card_corner_radius"
             app:cardElevation="6dp">
 
             <LinearLayout
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="@dimen/margin_medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -254,7 +255,7 @@ NOVEDADES EN ESTA VERSIÓN:
                     android:id="@+id/tvResumenCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aquí aparecerá un resumen interactivo"
+                    android:text="@string/msg_card_placeholder"
                     android:textAppearance="@style/TextAppearance.Material3.BodyMedium" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -262,14 +263,14 @@ NOVEDADES EN ESTA VERSIÓN:
         <!-- IMAGEBUTTON (acción rápida) -->
         <ImageButton
             android:id="@+id/btnRefrescar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/button_height"
+            android:layout_height="@dimen/button_height"
             android:src="@drawable/ic_refresh"
-            android:contentDescription="Refrescar formulario"
+            android:contentDescription="@string/msg_refresh"
             app:tint="@color/teal_700"
             app:layout_constraintTop_toBottomOf="@id/cardResumen"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="@dimen/margin_medium" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
