@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity() {
                     //EjemploBasico()
                     //Capitulo1_Fundamentos()
                     //Capitulo2_TemasYEstilos()
-                    Capitulo3_Interactividad()
+                    //Capitulo3_Interactividad()
+                    Capitulo4_ListasYLazyColumn()
                 }
             }
         }
@@ -64,6 +65,7 @@ fun EjemploBasicoPreview() {
         //EjemploBasico()
         //Capitulo1_Fundamentos()
         //Capitulo2_TemasYEstilos()
-        Capitulo3_Interactividad()
+        //Capitulo3_Interactividad()
+        Capitulo4_ListasYLazyColumn()
     }
 }
