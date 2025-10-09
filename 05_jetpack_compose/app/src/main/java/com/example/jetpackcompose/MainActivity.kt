@@ -28,7 +28,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     //EjemploBasico()
-                    Capitulo1_Fundamentos()
+                    //Capitulo1_Fundamentos()
+                    Capitulo2_TemasYEstilos()
                 }
             }
         }
@@ -60,6 +61,7 @@ Puedes tener varias previews para mostrar diferentes configuraciones.
 fun EjemploBasicoPreview() {
     JetpackComposeTheme {
         //EjemploBasico()
-        Capitulo1_Fundamentos()
+        //Capitulo1_Fundamentos()
+        Capitulo2_TemasYEstilos()
     }
 }
