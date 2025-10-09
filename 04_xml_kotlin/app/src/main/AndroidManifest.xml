@@ -17,7 +17,7 @@
         <!-- Activity por defecto que ejecuta android studio-->
         <!--android:name=".MainActivity"-->
         <activity
-            android:name=".MainActivityAdvanced"
+            android:name=".MainActivityCards"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
