@@ -27,7 +27,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    EjemploBasico()
+                    //EjemploBasico()
+                    Capitulo1_Fundamentos()
                 }
             }
         }
@@ -58,6 +59,7 @@ Puedes tener varias previews para mostrar diferentes configuraciones.
 @Composable
 fun EjemploBasicoPreview() {
     JetpackComposeTheme {
-        EjemploBasico()
+        //EjemploBasico()
+        Capitulo1_Fundamentos()
     }
 }
