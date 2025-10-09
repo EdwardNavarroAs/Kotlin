@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //EjemploBasico()
                     //Capitulo1_Fundamentos()
-                    Capitulo2_TemasYEstilos()
+                    //Capitulo2_TemasYEstilos()
+                    Capitulo3_Interactividad()
                 }
             }
         }
@@ -62,6 +63,7 @@ fun EjemploBasicoPreview() {
     JetpackComposeTheme {
         //EjemploBasico()
         //Capitulo1_Fundamentos()
-        Capitulo2_TemasYEstilos()
+        //Capitulo2_TemasYEstilos()
+        Capitulo3_Interactividad()
     }
 }
