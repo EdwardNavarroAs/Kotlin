@@ -33,7 +33,8 @@ class MainActivity : ComponentActivity() {
                     //Capitulo3_Interactividad()
                     //Capitulo4_ListasYLazyColumn()
                     //Capitulo5_NavegacionBasica()
-                    Capitulo6_LayoutsAvanzados()
+                    //Capitulo6_LayoutsAvanzados()
+                    Capitulo7_AnimacionesYGestos()
                 }
             }
         }
@@ -70,6 +71,7 @@ fun EjemploBasicoPreview() {
         //Capitulo3_Interactividad()
         //Capitulo4_ListasYLazyColumn()
         //Capitulo5_NavegacionBasica()
-        Capitulo6_LayoutsAvanzados()
+        //Capitulo6_LayoutsAvanzados()
+        Capitulo7_AnimacionesYGestos()
     }
 }
