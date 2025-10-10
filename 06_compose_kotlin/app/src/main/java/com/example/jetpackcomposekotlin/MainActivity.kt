@@ -64,10 +64,9 @@ class MainActivity : ComponentActivity() {
                     */
                     //Capitulo1_InteraccionBasica()
 
-                    Capitulo2_ListasYEstados()
-                    //Capitulo3_NavegacionYAnimaciones()
-                    //Capitulo4_MiniAppCompleta()
-                    //CapituloExtra_BuenasPracticas()
+                    //Capitulo2_ListasYEstados()
+                    Capitulo3_InteraccionAvanzada()
+
 
                     //BienvenidaCurso()
                 }
@@ -106,10 +105,8 @@ Puedes comentar/descomentar la función que desees previsualizar.
 fun MainPreview() {
     JetpackComposeKotlinTheme {
         //Capitulo1_InteraccionBasica()
-        Capitulo2_ListasYEstados()
-        //Capitulo3_NavegacionYAnimaciones()
-        //Capitulo4_MiniAppCompleta()
-        //CapituloExtra_BuenasPracticas()
+        //Capitulo2_ListasYEstados()
+        Capitulo3_InteraccionAvanzada()
 
         //BienvenidaCurso()
     }
