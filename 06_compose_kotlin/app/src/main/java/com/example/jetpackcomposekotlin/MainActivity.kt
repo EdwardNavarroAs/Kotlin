@@ -62,13 +62,14 @@ class MainActivity : ComponentActivity() {
                     ejecutar el capítulo que deseas visualizar.
                     ────────────────────────────────────────────────
                     */
-                    Capitulo1_InteraccionBasica()
-                    //Capitulo2_ListasYEstados()
+                    //Capitulo1_InteraccionBasica()
+
+                    Capitulo2_ListasYEstados()
                     //Capitulo3_NavegacionYAnimaciones()
                     //Capitulo4_MiniAppCompleta()
                     //CapituloExtra_BuenasPracticas()
 
-                    BienvenidaCurso()
+                    //BienvenidaCurso()
                 }
             }
         }
@@ -104,12 +105,12 @@ Puedes comentar/descomentar la función que desees previsualizar.
 @Composable
 fun MainPreview() {
     JetpackComposeKotlinTheme {
-        Capitulo1_InteraccionBasica()
-        //Capitulo2_ListasYEstados()
+        //Capitulo1_InteraccionBasica()
+        Capitulo2_ListasYEstados()
         //Capitulo3_NavegacionYAnimaciones()
         //Capitulo4_MiniAppCompleta()
         //CapituloExtra_BuenasPracticas()
 
-        BienvenidaCurso()
+        //BienvenidaCurso()
     }
 }
