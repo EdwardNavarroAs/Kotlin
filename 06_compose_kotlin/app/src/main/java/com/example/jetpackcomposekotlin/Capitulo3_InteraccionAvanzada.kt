@@ -32,7 +32,7 @@ MAPA DEL ARCHIVO
 ────────────────
 1) Modelos y utilidades (Product, Category)
 2) Estado “tipo ViewModel” dentro del archivo (para simplificar el capítulo)
-3) Pantalla principal: Capitulo3_InteraccionAvanzada()
+3) Pantalla principal: Capitulo3_InteraccionSemiAvanzada()
    - Scaffold con TopBar colapsable, SnackbarHost, BottomBar y FAB
 4) TopBarAvanzada(): altura y elevación animadas por scroll
 5) Filtro y búsqueda: SearchBar + Chips
@@ -274,7 +274,7 @@ private data class CatalogState(
 3) PANTALLA PRINCIPAL — CON ANIMACIONES DE SCROLL
 ───────────────────────────────────────────────────────────── */
 @Composable
-fun Capitulo3_InteraccionAvanzada() {
+fun Capitulo3_InteraccionSemiAvanzada() {
     val context = LocalContext.current
     val state = rememberCatalogState()
 
@@ -761,8 +761,8 @@ private fun SeccionNotasFinales() {
 ───────────────────────────────────────────────────────────── */
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewCapitulo3_InteraccionAvanzada() {
+fun PreviewCapitulo3_InteraccionSemiAvanzada() {
     JetpackComposeKotlinTheme {
-        Capitulo3_InteraccionAvanzada()
+        Capitulo3_InteraccionSemiAvanzada()
     }
 }

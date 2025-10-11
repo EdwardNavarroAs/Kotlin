@@ -65,8 +65,8 @@ class MainActivity : ComponentActivity() {
                     //Capitulo1_InteraccionBasica()
 
                     //Capitulo2_ListasYEstados()
-                    Capitulo3_InteraccionAvanzada()
-
+                    //Capitulo3_InteraccionSemiAvanzada()
+                    Capitulo4_InteraccionAvanzada()
 
                     //BienvenidaCurso()
                 }
@@ -106,8 +106,8 @@ fun MainPreview() {
     JetpackComposeKotlinTheme {
         //Capitulo1_InteraccionBasica()
         //Capitulo2_ListasYEstados()
-        Capitulo3_InteraccionAvanzada()
-
+        //Capitulo3_InteraccionSemiAvanzada()
+        Capitulo4_InteraccionAvanzada()
         //BienvenidaCurso()
     }
 }
