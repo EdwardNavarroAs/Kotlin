@@ -49,7 +49,7 @@ enum class CapituloActivo {
 }
 
 // Cambia este valor para seleccionar qué capítulo se mostrará.
-private val CAPITULO_ACTUAL = CapituloActivo.CAP1_INTENTS_BASICOS
+private val CAPITULO_ACTUAL = CapituloActivo.CAP2_PERMISOS_Y_RESULTADOS
 
 class MainActivity : ComponentActivity() {
 
@@ -109,8 +109,7 @@ fun ContenidoCapitulo(capitulo: CapituloActivo) {
             Capitulo1_IntentsBasicos()
         }
         CapituloActivo.CAP2_PERMISOS_Y_RESULTADOS -> {
-            // Capitulo2_PermisosYResultados()
-            BienvenidaModulo07()
+            Capitulo2_PermisosYResultados()
         }
         CapituloActivo.CAP3_PERIFERICOS_AVANZADOS -> {
             // Capitulo3_PerifericosAvanzados()
