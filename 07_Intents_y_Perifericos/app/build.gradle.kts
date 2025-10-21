@@ -52,6 +52,10 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
     implementation("androidx.exifinterface:exifinterface:1.3.7")
+    implementation("androidx.camera:camera-camera2:1.5.1")
+    implementation("androidx.camera:camera-lifecycle:1.5.1")
+    implementation("androidx.camera:camera-view:1.5.1")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
