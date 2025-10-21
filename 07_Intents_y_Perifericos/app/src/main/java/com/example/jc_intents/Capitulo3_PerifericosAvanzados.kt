@@ -64,6 +64,7 @@ import java.util.concurrent.Executor
 import androidx.camera.core.Preview as CameraXPreview
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 
 /* ────────────────────────────────────────────────────────
@@ -113,8 +114,12 @@ fun Capitulo3_PerifericosAvanzados() {
                 scope = scope
             )
 
-            // Próximas secciones (se implementarán después):
-            // AudioSection_GrabacionYReproduccion(...)
+            AudioSection_GrabarYReproducir(
+                context = context,
+                snackbar = snackbar,
+                scope = scope
+            )
+            
             // SensoresSection_Acelerometro(...)
         }
     }
@@ -142,7 +147,7 @@ fun CamaraX_PreviewCaptureSection(
     scope: CoroutineScope
 ) {
     // 1) Infraestructura de CameraX
-    val lifecycleOwner = LocalLifecycleOwner.current
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
     val mainExecutor: Executor = remember { ContextCompat.getMainExecutor(context) }
 
     // 2) Referencias mutables a los “use cases” de CameraX
@@ -287,6 +292,263 @@ private fun AndroidPreview(
         }
     )
 }
+
+
+/* ────────────────────────────────────────────────────────
+  SECCIÓN 2 — Audio: grabar y reproducir (MediaRecorder/MediaPlayer)
+  Objetivo:
+  • Grabar audio desde el micrófono y guardarlo directo en la galería de audio (MediaStore).
+  • Reproducir la última grabación con MediaPlayer.
+  • Pedir RECORD_AUDIO justo antes de grabar (permiso runtime).
+
+  Por qué así:
+  • En Android 10+ (API 29) podemos insertar en MediaStore sin permisos legacy de escritura.
+  • Guardar en MediaStore hace que aparezca en apps de música/archivos.
+
+  Formato:
+  • .m4a (MPEG_4 + AAC) → buena compatibilidad y compresión.
+──────────────────────────────────────────────────────── */
+@Composable
+fun AudioSection_GrabarYReproducir(
+    context: Context,
+    snackbar: SnackbarHostState,
+    scope: CoroutineScope
+) {
+    // Estado de UI
+    var isRecording by remember { mutableStateOf(false) }
+    var lastAudioUri by remember { mutableStateOf<Uri?>(null) }
+    var isPlaying by remember { mutableStateOf(false) }
+
+    // Recursos nativos (se limpian en onDispose)
+    var recorder by remember { mutableStateOf<android.media.MediaRecorder?>(null) }
+    var player by remember { mutableStateOf<android.media.MediaPlayer?>(null) }
+    var currentRecordingUri by remember { mutableStateOf<Uri?>(null) }
+
+    // Permiso RECORD_AUDIO
+    val requestRecordAudio = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (!granted) {
+            scope.launch { snackbar.showSnackbar("Permiso de micrófono denegado") }
+            return@rememberLauncherForActivityResult
+        }
+        // Si concede, iniciamos grabación inmediatamente (flujo didáctico)
+        startRecording(
+            context = context,
+            onPrepared = { r, uri ->
+                recorder = r; currentRecordingUri = uri; isRecording = true
+                scope.launch { snackbar.showSnackbar("Grabando…") }
+            },
+            onError = { msg -> scope.launch { snackbar.showSnackbar(msg) } }
+        )
+    }
+
+    // UI
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+    ) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text("Audio — Grabar y reproducir", style = MaterialTheme.typography.titleMedium)
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+
+                // Iniciar grabación
+                Button(
+                    onClick = {
+                        if (isRecording) {
+                            scope.launch { snackbar.showSnackbar("Ya estás grabando") }
+                            return@Button
+                        }
+                        val micGranted = ContextCompat.checkSelfPermission(
+                            context, Manifest.permission.RECORD_AUDIO
+                        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+
+                        if (!micGranted) {
+                            requestRecordAudio.launch(Manifest.permission.RECORD_AUDIO)
+                        } else {
+                            startRecording(
+                                context = context,
+                                onPrepared = { r, uri ->
+                                    recorder = r; currentRecordingUri = uri; isRecording = true
+                                    scope.launch { snackbar.showSnackbar("Grabando…") }
+                                },
+                                onError = { msg -> scope.launch { snackbar.showSnackbar(msg) } }
+                            )
+                        }
+                    }
+                ) { Text("Grabar") }
+
+                // Detener grabación
+                OutlinedButton(
+                    onClick = {
+                        if (!isRecording) {
+                            scope.launch { snackbar.showSnackbar("No hay grabación en curso") }
+                            return@OutlinedButton
+                        }
+                        runCatching { recorder?.stop() }
+                        runCatching { recorder?.release() }
+                        recorder = null
+                        isRecording = false
+
+                        // Guardamos el Uri como último audio válido
+                        lastAudioUri = currentRecordingUri
+                        currentRecordingUri = null
+
+                        scope.launch { snackbar.showSnackbar("Grabación guardada") }
+                    },
+                    enabled = isRecording
+                ) { Text("Detener") }
+            }
+
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                // Reproducir última grabación
+                Button(
+                    onClick = {
+                        val uri = lastAudioUri ?: run {
+                            scope.launch { snackbar.showSnackbar("No hay grabaciones") }
+                            return@Button
+                        }
+                        if (isPlaying) {
+                            scope.launch { snackbar.showSnackbar("Ya se está reproduciendo") }
+                            return@Button
+                        }
+                        startPlayback(
+                            context = context,
+                            uri = uri,
+                            onStarted = { p -> player = p; isPlaying = true },
+                            onCompleted = {
+                                isPlaying = false
+                                scope.launch { snackbar.showSnackbar("Reproducción finalizada") }
+                            },
+                            onError = { msg -> scope.launch { snackbar.showSnackbar(msg) } }
+                        )
+                    }
+                ) { Text("Reproducir") }
+
+                // Detener reproducción
+                OutlinedButton(
+                    onClick = {
+                        runCatching { player?.stop() }
+                        runCatching { player?.release() }
+                        player = null
+                        isPlaying = false
+                    },
+                    enabled = isPlaying
+                ) { Text("Detener audio") }
+            }
+
+            // Info útil para el alumno
+            lastAudioUri?.let { uri ->
+                Text("Última grabación: $uri", style = MaterialTheme.typography.bodySmall)
+            }
+        }
+    }
+
+    // Limpieza de recursos si el composable sale del árbol
+    DisposableEffect(Unit) {
+        onDispose {
+            runCatching { recorder?.stop() }
+            runCatching { recorder?.release() }
+            recorder = null
+
+            runCatching { player?.stop() }
+            runCatching { player?.release() }
+            player = null
+        }
+    }
+}
+
+/* ────────────────────────────────────────────────────────
+startRecording:
+- Inserta un item en MediaStore (Music/JC_Intents) y configura MediaRecorder
+  para escribir directamente sobre ese Uri.
+- Llama a onPrepared cuando el recorder está listo y la grabación ha iniciado.
+──────────────────────────────────────────────────────── */
+private fun startRecording(
+    context: Context,
+    onPrepared: (android.media.MediaRecorder, Uri) -> Unit,
+    onError: (String) -> Unit
+) {
+    // Solo soportamos guardado directo en galería en API 29+ (Scoped Storage)
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        onError("API ≤ 28: para guardar en galería se requiere WRITE_EXTERNAL_STORAGE o usar almacenamiento interno.")
+        return
+    }
+
+    // 1) Crear destino en MediaStore (Music/JC_Intents, MIME: audio/mp4)
+    val name = "AUD_${System.currentTimeMillis()}.m4a"
+    val values = ContentValues().apply {
+        put(MediaStore.Audio.Media.DISPLAY_NAME, name)
+        put(MediaStore.Audio.Media.MIME_TYPE, "audio/mp4")
+        put(MediaStore.Audio.Media.RELATIVE_PATH, "Music/JC_Intents")
+        put(MediaStore.Audio.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
+        put(MediaStore.Audio.Media.DATE_MODIFIED, System.currentTimeMillis() / 1000)
+        // Opcional: título, artista, etc.
+        put(MediaStore.Audio.Media.TITLE, name)
+    }
+    val resolver = context.contentResolver
+    val collection = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+    val itemUri = resolver.insert(collection, values)
+    if (itemUri == null) {
+        onError("No se pudo crear el archivo de audio en MediaStore.")
+        return
+    }
+
+    // 2) Abrir el FileDescriptor del Uri para que MediaRecorder escriba ahí
+    val pfd = resolver.openFileDescriptor(itemUri, "w") ?: run {
+        onError("No se pudo abrir el destino de audio.")
+        // Limpieza: borrar entrada vacía
+        runCatching { resolver.delete(itemUri, null, null) }
+        return
+    }
+
+    // 3) Configurar y arrancar MediaRecorder
+    try {
+        val recorder = android.media.MediaRecorder().apply {
+            setAudioSource(android.media.MediaRecorder.AudioSource.MIC)
+            setOutputFormat(android.media.MediaRecorder.OutputFormat.MPEG_4)
+            setAudioEncoder(android.media.MediaRecorder.AudioEncoder.AAC)
+            setAudioSamplingRate(44100)
+            setAudioEncodingBitRate(128_000)
+            setOutputFile(pfd.fileDescriptor)
+            prepare()
+            start()
+        }
+        onPrepared(recorder, itemUri)
+    } catch (e: Exception) {
+        // Si algo falla, eliminamos el item para no dejar “huecos”
+        runCatching { resolver.delete(itemUri, null, null) }
+        onError("Error al iniciar grabación: ${e.message}")
+    }
+}
+
+/* ────────────────────────────────────────────────────────
+startPlayback:
+- Configura MediaPlayer con el Uri de la última grabación y reproduce.
+- Notifica onCompleted al terminar.
+──────────────────────────────────────────────────────── */
+private fun startPlayback(
+    context: Context,
+    uri: Uri,
+    onStarted: (android.media.MediaPlayer) -> Unit,
+    onCompleted: () -> Unit,
+    onError: (String) -> Unit
+) {
+    try {
+        val player = android.media.MediaPlayer().apply {
+            setDataSource(context, uri)
+            setOnCompletionListener { onCompleted() }
+            prepare()
+            start()
+        }
+        onStarted(player)
+    } catch (e: Exception) {
+        onError("No se pudo reproducir: ${e.message}")
+    }
+}
+
+
 
 /* ────────────────────────────────────────────────────────
 startCameraX:
