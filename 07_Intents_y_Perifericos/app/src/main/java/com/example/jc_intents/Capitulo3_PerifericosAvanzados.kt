@@ -119,8 +119,13 @@ fun Capitulo3_PerifericosAvanzados() {
                 snackbar = snackbar,
                 scope = scope
             )
-            
-            // SensoresSection_Acelerometro(...)
+
+            SensoresSection_Acelerometro(
+                context = context,
+                snackbar = snackbar,
+                scope = scope
+            )
+
         }
     }
 }
@@ -458,6 +463,120 @@ fun AudioSection_GrabarYReproducir(
         }
     }
 }
+
+
+/* ────────────────────────────────────────────────────────
+  SECCIÓN 3 — Sensores: Acelerómetro en tiempo real
+  Objetivo:
+  • Leer valores del acelerómetro (X, Y, Z) con SensorManager.
+  • Actualizar la UI con Compose (State) en tiempo real.
+  • Ejemplo: detección simple de “sacudida” (shake).
+
+  Notas:
+  • No requiere permisos.
+  • Registrar/Cancelar el listener en el ciclo de vida del composable
+    para no consumir batería cuando no está visible.
+──────────────────────────────────────────────────────── */
+@Composable
+fun SensoresSection_Acelerometro(
+    context: Context,
+    snackbar: SnackbarHostState,
+    scope: CoroutineScope
+) {
+    // 1) Obtener SensorManager de forma SEGURA (puede ser null en Preview)
+    val sensorManager = remember {
+        // En runtime real devuelve el manager; en Preview puede ser null
+        context.getSystemService(Context.SENSOR_SERVICE) as? android.hardware.SensorManager
+    }
+
+    // 2) Intentar obtener el acelerómetro (también puede ser null)
+    val accelerometer = remember {
+        sensorManager?.getDefaultSensor(android.hardware.Sensor.TYPE_ACCELEROMETER)
+    }
+
+    // 3) Estados para lecturas
+    var ax by remember { mutableStateOf(0f) }
+    var ay by remember { mutableStateOf(0f) }
+    var az by remember { mutableStateOf(0f) }
+
+    val shakeThreshold = 12f
+    var lastShakeTs by remember { mutableStateOf(0L) }
+
+    // 4) Listener (solo lo usaremos si hay sensor)
+    val listener = remember {
+        object : android.hardware.SensorEventListener {
+            override fun onSensorChanged(event: android.hardware.SensorEvent) {
+                ax = event.values.getOrNull(0) ?: 0f
+                ay = event.values.getOrNull(1) ?: 0f
+                az = event.values.getOrNull(2) ?: 0f
+                val magnitude = kotlin.math.sqrt(ax * ax + ay * ay + az * az)
+                val now = System.currentTimeMillis()
+                if (magnitude > shakeThreshold && now - lastShakeTs > 800) {
+                    lastShakeTs = now
+                    scope.launch { snackbar.showSnackbar("Movimiento brusco detectado (shake)") }
+                }
+            }
+            override fun onAccuracyChanged(sensor: android.hardware.Sensor?, accuracy: Int) = Unit
+        }
+    }
+
+    // 5) Registrar/desregistrar SOLO si tenemos manager y sensor
+    DisposableEffect(sensorManager, accelerometer) {
+        if (sensorManager != null && accelerometer != null) {
+            sensorManager.registerListener(
+                listener,
+                accelerometer,
+                android.hardware.SensorManager.SENSOR_DELAY_UI
+            )
+        }
+        onDispose {
+            sensorManager?.unregisterListener(listener)
+        }
+    }
+
+    // 6) UI
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = androidx.compose.material3.CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text("Sensores — Acelerómetro (X, Y, Z)", style = MaterialTheme.typography.titleMedium)
+
+            if (sensorManager == null) {
+                // Caso típico de Preview
+                Text(
+                    "SensorManager no disponible (Preview de Android Studio).",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else if (accelerometer == null) {
+                // Dispositivo/emulador sin acelerómetro
+                Text(
+                    "Este dispositivo no reporta un acelerómetro.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                // Lecturas en tiempo real
+                Text("X: ${"%.2f".format(ax)}  m/s²")
+                Text("Y: ${"%.2f".format(ay)}  m/s²")
+                Text("Z: ${"%.2f".format(az)}  m/s²")
+
+                Text(
+                    text = "Tip: mueve el dispositivo para ver cómo cambian las lecturas. " +
+                            "Incluye una detección simple de sacudida (shake).",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
+
+
 
 /* ────────────────────────────────────────────────────────
 startRecording:
